@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace TileMeUpDomain.Models
 {
     public class Tile : BaseModel
     {
+        [Key]
         public int TileId { get; set; }
 
         public int TilePosition { get; set; }

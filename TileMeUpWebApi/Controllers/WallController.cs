@@ -15,14 +15,15 @@ namespace TileMeUpWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClosetController : ControllerBase
+    public class WallController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public ClosetController(IUnitOfWork unitOfWork)
+        public WallController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
+
 
         [HttpGet("GetByCreator/{userId}")]
         public async Task<ActionResult<IEnumerable<Wall>>> GetByCreator(int userId)
@@ -45,40 +46,41 @@ namespace TileMeUpWebApi.Controllers
             return Walls.ToList();
         }
 
+
         [HttpGet("GetAll")]
-        public async Task<ActionResult<IEnumerable<Closet>>> GetAll()
+        public async Task<ActionResult<IEnumerable<Wall>>> GetAll()
         {
 
-            var Closets = await _unitOfWork.ClosetRepository.GetAsync();
-            if (Closets == null )
+            var Walls = await _unitOfWork.WallRepository.GetAsync();
+            if (Walls == null )
             {
                 return NotFound();
             }
 
-            return Closets.ToList();
+            return Walls.ToList();
         }
 
-        [HttpGet("Get/{closetId}")]
-        public async Task<ActionResult<Closet>> Get(int closetId)
+        [HttpGet("Get/{wallId}")]
+        public async Task<ActionResult<Wall>> Get(int wallId)
         {
-            var closet = await _unitOfWork.ClosetRepository.GetByIDAsync(closetId);
-            if (closet == null)
+            var wall = await _unitOfWork.WallRepository.GetByIDAsync(wallId);
+            if (wall == null)
             {
                 return NotFound();
             }
 
-            return closet;
+            return wall;
         }
 
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("Update")]
-        public async Task<IActionResult> Update(Closet closet)
+        public async Task<IActionResult> Update(Wall wall)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _unitOfWork.ClosetRepository.Update(closet);
+                    _unitOfWork.WallRepository.Update(wall);
                     _unitOfWork.Save();
                     return NoContent();
                 }
@@ -95,25 +97,25 @@ namespace TileMeUpWebApi.Controllers
 
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("Create")]
-        public async Task<ActionResult<Closet>> Create(Closet closet)
+        public async Task<ActionResult<Wall>> Create(Wall wall)
         {
-            await _unitOfWork.ClosetRepository.Insert(closet);
+            await _unitOfWork.WallRepository.Insert(wall);
             _unitOfWork.Save();
 
-            return closet;
+            return wall;
         }
 
-        [HttpDelete("Delete/{closetId}")]
-        public async Task<IActionResult> Delete(int closetId)
+        [HttpDelete("Delete/{wallId}")]
+        public async Task<IActionResult> Delete(int wallId)
         {
            
-            var closet = await _unitOfWork.ClosetRepository.GetByIDAsync(closetId);
-            if (closet == null)
+            var wall = await _unitOfWork.WallRepository.GetByIDAsync(wallId);
+            if (wall == null)
             {
                 return NotFound();
             }
 
-            _unitOfWork.ClosetRepository.Delete(closet);
+            _unitOfWork.WallRepository.Delete(wall);
             _unitOfWork.Save();
 
             return NoContent();

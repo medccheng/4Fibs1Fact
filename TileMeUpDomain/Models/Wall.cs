@@ -18,12 +18,6 @@ namespace TileMeUpDomain.Models
 
 
 
-        public int UserId { get; set; }
-        public User? User { get; set; }
-
-        public int CreatedById { get; set; }
-        public User? CreatedBy { get; set; }
-
         public int WallLayoutId { get; set; }
 
         public WallLayout? WallLayout { get; set; }

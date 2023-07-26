@@ -1,6 +1,9 @@
-﻿namespace TileMeUpDomain.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TileMeUpDomain.Models
 {    public class Item : BaseModel
     {
+        [Key]
         public int ItemId { get; set; }
 
         public DateTime? PurchasedOn { get; set; }

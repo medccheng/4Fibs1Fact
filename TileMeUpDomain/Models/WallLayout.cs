@@ -1,7 +1,10 @@
-﻿namespace TileMeUpDomain.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TileMeUpDomain.Models
 {
     public class WallLayout : BaseModel
     {
+        [Key]
         public int WallLayoutId { get; set; }
 
         public string Name { get; set; }
