@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TileMeUpWebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDB : Migration
+    public partial class InitialDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,51 +26,13 @@ namespace TileMeUpWebApi.Migrations
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedById = table.Column<int>(type: "int", nullable: true),
-                    UpdateById = table.Column<int>(type: "int", nullable: true)
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdateById = table.Column<int>(type: "int", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
-                    table.ForeignKey(
-                        name: "FK_Users_Users_CreatedById",
-                        column: x => x.CreatedById,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
-                    table.ForeignKey(
-                        name: "FK_Users_Users_UpdateById",
-                        column: x => x.UpdateById,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Closet",
-                columns: table => new
-                {
-                    ClosetId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ClosetName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClosetDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Access = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedById = table.Column<int>(type: "int", nullable: true),
-                    UpdateById = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Closet", x => x.ClosetId);
-                    table.ForeignKey(
-                        name: "FK_Closet_Users_CreatedById",
-                        column: x => x.CreatedById,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
-                    table.ForeignKey(
-                        name: "FK_Closet_Users_UpdateById",
-                        column: x => x.UpdateById,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateTable(
@@ -87,21 +49,75 @@ namespace TileMeUpWebApi.Migrations
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedById = table.Column<int>(type: "int", nullable: true),
-                    UpdateById = table.Column<int>(type: "int", nullable: true)
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdateById = table.Column<int>(type: "int", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WallLayouts", x => x.WallLayoutId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Closet",
+                columns: table => new
+                {
+                    ClosetId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ClosetName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClosetDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Access = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedById = table.Column<int>(type: "int", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdateById = table.Column<int>(type: "int", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Closet", x => x.ClosetId);
                     table.ForeignKey(
-                        name: "FK_WallLayouts_Users_CreatedById",
-                        column: x => x.CreatedById,
+                        name: "FK_Closet_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Walls",
+                columns: table => new
+                {
+                    WallId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WallName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WallDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WallLayoutId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Access = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedById = table.Column<int>(type: "int", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdateById = table.Column<int>(type: "int", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Walls", x => x.WallId);
+                    table.ForeignKey(
+                        name: "FK_Walls_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId");
                     table.ForeignKey(
-                        name: "FK_WallLayouts_Users_UpdateById",
-                        column: x => x.UpdateById,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
+                        name: "FK_Walls_WallLayouts_WallLayoutId",
+                        column: x => x.WallLayoutId,
+                        principalTable: "WallLayouts",
+                        principalColumn: "WallLayoutId");
                 });
 
             migrationBuilder.CreateTable(
@@ -116,12 +132,15 @@ namespace TileMeUpWebApi.Migrations
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClosetId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Access = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedById = table.Column<int>(type: "int", nullable: true),
-                    UpdateById = table.Column<int>(type: "int", nullable: true)
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdateById = table.Column<int>(type: "int", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -130,55 +149,12 @@ namespace TileMeUpWebApi.Migrations
                         name: "FK_Items_Closet_ClosetId",
                         column: x => x.ClosetId,
                         principalTable: "Closet",
-                        principalColumn: "ClosetId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ClosetId");
                     table.ForeignKey(
-                        name: "FK_Items_Users_CreatedById",
-                        column: x => x.CreatedById,
+                        name: "FK_Items_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId");
-                    table.ForeignKey(
-                        name: "FK_Items_Users_UpdateById",
-                        column: x => x.UpdateById,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Walls",
-                columns: table => new
-                {
-                    WallId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    WallName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WallDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WallLayoutId = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Access = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedById = table.Column<int>(type: "int", nullable: true),
-                    UpdateById = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Walls", x => x.WallId);
-                    table.ForeignKey(
-                        name: "FK_Walls_Users_CreatedById",
-                        column: x => x.CreatedById,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
-                    table.ForeignKey(
-                        name: "FK_Walls_Users_UpdateById",
-                        column: x => x.UpdateById,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
-                    table.ForeignKey(
-                        name: "FK_Walls_WallLayouts_WallLayoutId",
-                        column: x => x.WallLayoutId,
-                        principalTable: "WallLayouts",
-                        principalColumn: "WallLayoutId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -194,12 +170,15 @@ namespace TileMeUpWebApi.Migrations
                     Gender = table.Column<int>(type: "int", nullable: true),
                     Material = table.Column<int>(type: "int", nullable: true),
                     ItemId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Access = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedById = table.Column<int>(type: "int", nullable: true),
-                    UpdateById = table.Column<int>(type: "int", nullable: true)
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdateById = table.Column<int>(type: "int", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -208,16 +187,10 @@ namespace TileMeUpWebApi.Migrations
                         name: "FK_Accessories_Items_ItemId",
                         column: x => x.ItemId,
                         principalTable: "Items",
-                        principalColumn: "ItemId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ItemId");
                     table.ForeignKey(
-                        name: "FK_Accessories_Users_CreatedById",
-                        column: x => x.CreatedById,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
-                    table.ForeignKey(
-                        name: "FK_Accessories_Users_UpdateById",
-                        column: x => x.UpdateById,
+                        name: "FK_Accessories_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId");
                 });
@@ -236,12 +209,15 @@ namespace TileMeUpWebApi.Migrations
                     Material = table.Column<int>(type: "int", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     ItemId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Access = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedById = table.Column<int>(type: "int", nullable: true),
-                    UpdateById = table.Column<int>(type: "int", nullable: true)
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdateById = table.Column<int>(type: "int", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -250,16 +226,10 @@ namespace TileMeUpWebApi.Migrations
                         name: "FK_Clothings_Items_ItemId",
                         column: x => x.ItemId,
                         principalTable: "Items",
-                        principalColumn: "ItemId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ItemId");
                     table.ForeignKey(
-                        name: "FK_Clothings_Users_CreatedById",
-                        column: x => x.CreatedById,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
-                    table.ForeignKey(
-                        name: "FK_Clothings_Users_UpdateById",
-                        column: x => x.UpdateById,
+                        name: "FK_Clothings_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId");
                 });
@@ -278,12 +248,15 @@ namespace TileMeUpWebApi.Migrations
                     Material = table.Column<int>(type: "int", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     ItemId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Access = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedById = table.Column<int>(type: "int", nullable: true),
-                    UpdateById = table.Column<int>(type: "int", nullable: true)
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdateById = table.Column<int>(type: "int", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -292,16 +265,10 @@ namespace TileMeUpWebApi.Migrations
                         name: "FK_Footwears_Items_ItemId",
                         column: x => x.ItemId,
                         principalTable: "Items",
-                        principalColumn: "ItemId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ItemId");
                     table.ForeignKey(
-                        name: "FK_Footwears_Users_CreatedById",
-                        column: x => x.CreatedById,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
-                    table.ForeignKey(
-                        name: "FK_Footwears_Users_UpdateById",
-                        column: x => x.UpdateById,
+                        name: "FK_Footwears_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId");
                 });
@@ -320,12 +287,15 @@ namespace TileMeUpWebApi.Migrations
                     Material = table.Column<int>(type: "int", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     ItemId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Access = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedById = table.Column<int>(type: "int", nullable: true),
-                    UpdateById = table.Column<int>(type: "int", nullable: true)
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdateById = table.Column<int>(type: "int", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -334,16 +304,10 @@ namespace TileMeUpWebApi.Migrations
                         name: "FK_Jewelries_Items_ItemId",
                         column: x => x.ItemId,
                         principalTable: "Items",
-                        principalColumn: "ItemId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ItemId");
                     table.ForeignKey(
-                        name: "FK_Jewelries_Users_CreatedById",
-                        column: x => x.CreatedById,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
-                    table.ForeignKey(
-                        name: "FK_Jewelries_Users_UpdateById",
-                        column: x => x.UpdateById,
+                        name: "FK_Jewelries_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId");
                 });
@@ -359,12 +323,15 @@ namespace TileMeUpWebApi.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     WallId = table.Column<int>(type: "int", nullable: false),
                     ItemId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Access = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedById = table.Column<int>(type: "int", nullable: true),
-                    UpdateById = table.Column<int>(type: "int", nullable: true)
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdateById = table.Column<int>(type: "int", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -373,30 +340,18 @@ namespace TileMeUpWebApi.Migrations
                         name: "FK_Tiles_Items_ItemId",
                         column: x => x.ItemId,
                         principalTable: "Items",
-                        principalColumn: "ItemId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ItemId");
                     table.ForeignKey(
-                        name: "FK_Tiles_Users_CreatedById",
-                        column: x => x.CreatedById,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
-                    table.ForeignKey(
-                        name: "FK_Tiles_Users_UpdateById",
-                        column: x => x.UpdateById,
+                        name: "FK_Tiles_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId");
                     table.ForeignKey(
                         name: "FK_Tiles_Walls_WallId",
                         column: x => x.WallId,
                         principalTable: "Walls",
-                        principalColumn: "WallId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "WallId");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Accessories_CreatedById",
-                table: "Accessories",
-                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Accessories_ItemId",
@@ -404,24 +359,14 @@ namespace TileMeUpWebApi.Migrations
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Accessories_UpdateById",
+                name: "IX_Accessories_UserId",
                 table: "Accessories",
-                column: "UpdateById");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Closet_CreatedById",
+                name: "IX_Closet_UserId",
                 table: "Closet",
-                column: "CreatedById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Closet_UpdateById",
-                table: "Closet",
-                column: "UpdateById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Clothings_CreatedById",
-                table: "Clothings",
-                column: "CreatedById");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clothings_ItemId",
@@ -429,14 +374,9 @@ namespace TileMeUpWebApi.Migrations
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Clothings_UpdateById",
+                name: "IX_Clothings_UserId",
                 table: "Clothings",
-                column: "UpdateById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Footwears_CreatedById",
-                table: "Footwears",
-                column: "CreatedById");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Footwears_ItemId",
@@ -444,9 +384,9 @@ namespace TileMeUpWebApi.Migrations
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Footwears_UpdateById",
+                name: "IX_Footwears_UserId",
                 table: "Footwears",
-                column: "UpdateById");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Items_ClosetId",
@@ -454,19 +394,9 @@ namespace TileMeUpWebApi.Migrations
                 column: "ClosetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Items_CreatedById",
+                name: "IX_Items_UserId",
                 table: "Items",
-                column: "CreatedById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Items_UpdateById",
-                table: "Items",
-                column: "UpdateById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Jewelries_CreatedById",
-                table: "Jewelries",
-                column: "CreatedById");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Jewelries_ItemId",
@@ -474,14 +404,9 @@ namespace TileMeUpWebApi.Migrations
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Jewelries_UpdateById",
+                name: "IX_Jewelries_UserId",
                 table: "Jewelries",
-                column: "UpdateById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tiles_CreatedById",
-                table: "Tiles",
-                column: "CreatedById");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tiles_ItemId",
@@ -489,9 +414,9 @@ namespace TileMeUpWebApi.Migrations
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tiles_UpdateById",
+                name: "IX_Tiles_UserId",
                 table: "Tiles",
-                column: "UpdateById");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tiles_WallId",
@@ -499,34 +424,9 @@ namespace TileMeUpWebApi.Migrations
                 column: "WallId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_CreatedById",
-                table: "Users",
-                column: "CreatedById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_UpdateById",
-                table: "Users",
-                column: "UpdateById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_WallLayouts_CreatedById",
-                table: "WallLayouts",
-                column: "CreatedById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_WallLayouts_UpdateById",
-                table: "WallLayouts",
-                column: "UpdateById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Walls_CreatedById",
+                name: "IX_Walls_UserId",
                 table: "Walls",
-                column: "CreatedById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Walls_UpdateById",
-                table: "Walls",
-                column: "UpdateById");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Walls_WallLayoutId",

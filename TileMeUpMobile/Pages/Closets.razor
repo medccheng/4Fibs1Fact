@@ -1,0 +1,34 @@
+﻿@page "/closets"
+
+@using TileMeUpMobile.Data
+@using TileMeUpDomain.Models
+@inject ClosetService closetService
+
+
+<NavLink class="nav-link" href="createcloset">
+    Build a new closet
+</NavLink>
+@if (closets == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    foreach (var closet in closets)
+    {
+        <h2>@closet.ClosetName</h2>
+        <h5>@closet.ClosetDescription</h5>
+    }
+}
+
+
+
+@code {
+    private List<Closet> closets;
+
+    protected override async Task OnInitializedAsync()
+    {
+        closets = await closetService.GetAll();
+    }
+}
+

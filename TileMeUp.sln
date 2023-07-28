@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TileMeUpDomain", "TileMeUpD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TileMeUpWebApi", "TileMeUpWebApi\TileMeUpWebApi.csproj", "{29707A2C-BD28-4748-994B-67E665C6DF9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TileMeUpMobile", "TileMeUpMobile\TileMeUpMobile.csproj", "{4FE102CF-FB99-44F2-AC6B-D545426D580B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TileMeUpMobile", "TileMeUpMobile\TileMeUpMobile.csproj", "{C7DE1908-56BE-4160-82F5-93EFE8D88E2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,12 +23,12 @@ Global
 		{29707A2C-BD28-4748-994B-67E665C6DF9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29707A2C-BD28-4748-994B-67E665C6DF9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29707A2C-BD28-4748-994B-67E665C6DF9F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4FE102CF-FB99-44F2-AC6B-D545426D580B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4FE102CF-FB99-44F2-AC6B-D545426D580B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4FE102CF-FB99-44F2-AC6B-D545426D580B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{4FE102CF-FB99-44F2-AC6B-D545426D580B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4FE102CF-FB99-44F2-AC6B-D545426D580B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4FE102CF-FB99-44F2-AC6B-D545426D580B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{C7DE1908-56BE-4160-82F5-93EFE8D88E2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7DE1908-56BE-4160-82F5-93EFE8D88E2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7DE1908-56BE-4160-82F5-93EFE8D88E2A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C7DE1908-56BE-4160-82F5-93EFE8D88E2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7DE1908-56BE-4160-82F5-93EFE8D88E2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7DE1908-56BE-4160-82F5-93EFE8D88E2A}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

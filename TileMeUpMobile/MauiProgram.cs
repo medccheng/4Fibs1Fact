@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using TileMeUpMobile.Data;
 
 namespace TileMeUpMobile
 {
@@ -12,12 +13,19 @@ namespace TileMeUpMobile
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            builder.Services.AddMauiBlazorWebView();
+
 #if DEBUG
+		builder.Services.AddBlazorWebViewDeveloperTools();
 		builder.Logging.AddDebug();
 #endif
+
+            builder.Services.AddSingleton<WeatherForecastService>();
+            builder.Services.AddSingleton<UserService>();
+            builder.Services.AddSingleton<ClosetService>();
+            builder.Services.AddSingleton<WallService>();
 
             return builder.Build();
         }

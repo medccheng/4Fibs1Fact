@@ -1,0 +1,52 @@
+﻿@page "/createcloset"
+@using TileMeUpMobile.Data
+@using TileMeUpDomain.Models
+@using Microsoft.Maui.Controls;
+@inject ClosetService closetService
+@inject NavigationManager NavigationManager
+
+
+<h3>Create Closet</h3>
+
+<div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" @bind="name" />
+    <br />
+    <label for="description">Description:</label>
+    <input type="text" id="description" @bind="description" />
+
+</div>
+<button type="submit" @onclick="SubmitForm">Submit</button>
+
+
+
+
+@code {
+    private string name;
+    private string description;
+    private Closet closet;
+
+    private async Task SubmitForm()
+    {
+
+        closet = new Closet();
+        closet.ClosetName = name;
+        closet.ClosetDescription = description;
+        closet.UserId = 1;
+        closet.User = null;
+        closet.Status = "active";
+        closet.Access = "public";
+        closet.CreatedOn = DateTime.Now;
+        closet.UpdatedOn = DateTime.Now;
+        closet.CreatedById = 0;
+        closet.UpdateById = 0;
+        closet.CreatedBy = null;
+        closet.UpdatedBy = null;
+
+        closet = await closetService.CreateClosetAsync(closet);
+
+        if (closet != null)
+            NavigationManager.NavigateTo("/closets", true);
+
+    }
+}

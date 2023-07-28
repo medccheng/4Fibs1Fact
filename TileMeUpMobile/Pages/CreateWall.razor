@@ -1,0 +1,52 @@
+﻿@page "/createwall"
+@using TileMeUpMobile.Data
+@using TileMeUpDomain.Models
+@inject WallService wallService
+
+@if (wall == null)
+{
+    <h3>Create Wall</h3>
+
+
+    <div>
+        <label for="wallName">Name:</label>
+        <input type="text" id="wallName" @bind="wallName" />
+        <br/>
+        <label for="wallDescription">Description:</label>
+        <input type="text" id="wallDescription" @bind="wallDescription" />        
+    </div>
+    <button type="submit" @onclick="SubmitForm">Submit</button>
+
+}
+else
+{
+    <h2>Welcome to @wall.WallName!</h2>
+}
+
+
+@code {
+    private string wallName;
+    private string wallDescription;
+
+    private Wall wall;
+
+    private async Task SubmitForm()
+    {
+        wall = new Wall();
+        wall.WallName = wallName;
+        wall.WallDescription = wallDescription;
+        wall.WallLayoutId = 1;
+        wall.UserId = 1;
+        wall.Status = "active";
+        wall.Access = "public";
+        wall.CreatedOn = DateTime.Now;
+        wall.UpdatedOn = DateTime.Now;
+        wall.CreatedById = 0;
+        wall.UpdateById = 0;
+        wall.User = null;
+        wall.CreatedBy = null;
+        wall.UpdatedBy = null;        
+        
+        wall = await wallService.CreateWallAsync(wall);
+    }
+}

@@ -27,6 +27,12 @@ namespace TileMeUpWebApi
 
         public DbSet<WallLayout> WallLayouts { get; set; }
 
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.NoAction;
+            }
+        }
     }
 }

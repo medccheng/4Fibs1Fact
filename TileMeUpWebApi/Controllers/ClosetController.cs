@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,24 +26,24 @@ namespace TileMeUpWebApi.Controllers
         }
 
         [HttpGet("GetByCreator/{userId}")]
-        public async Task<ActionResult<IEnumerable<Wall>>> GetByCreator(int userId)
+        public async Task<ActionResult<IEnumerable<Closet>>> GetByCreator(int userId)
         {
             // Define the parameter for the lambda expression: TEntity
-            ParameterExpression parameter = Expression.Parameter(typeof(Wall));
+            ParameterExpression parameter = Expression.Parameter(typeof(Closet));
 
             Expression property = Expression.Property(parameter, "CreatedById");
             Expression constant = Expression.Constant(userId, typeof(int));
             Expression condition = Expression.Equal(property, constant);
-            Expression<Func<Wall, bool>> lambdaExpression = Expression.Lambda<Func<Wall, bool>>(condition, parameter);
+            Expression<Func<Closet, bool>> lambdaExpression = Expression.Lambda<Func<Closet, bool>>(condition, parameter);
 
-            var Walls = await _unitOfWork.WallRepository.GetAsync(lambdaExpression);
+            var Closets = await _unitOfWork.ClosetRepository.GetAsync(lambdaExpression);
 
-            if (Walls == null)
+            if (Closets == null)
             {
                 return NotFound();
             }
 
-            return Walls.ToList();
+            return Closets.ToList();
         }
 
         [HttpGet("GetAll")]

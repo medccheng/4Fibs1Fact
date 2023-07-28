@@ -12,8 +12,8 @@ using TileMeUpWebApi;
 namespace TileMeUpWebApi.Migrations
 {
     [DbContext(typeof(TileMeUpDbContext))]
-    [Migration("20230725233516_InitialDB")]
-    partial class InitialDB
+    [Migration("20230727222937_InitialDatabase")]
+    partial class InitialDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,6 +35,9 @@ namespace TileMeUpWebApi.Migrations
 
                     b.Property<string>("Access")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CreatedById")
@@ -71,16 +74,20 @@ namespace TileMeUpWebApi.Migrations
                     b.Property<int?>("UpdateById")
                         .HasColumnType("int");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("AccessoryId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("CreatedById");
+                    b.HasKey("AccessoryId");
 
                     b.HasIndex("ItemId");
 
-                    b.HasIndex("UpdateById");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Accessories");
                 });
@@ -105,6 +112,9 @@ namespace TileMeUpWebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("CreatedById")
                         .HasColumnType("int");
 
@@ -118,14 +128,18 @@ namespace TileMeUpWebApi.Migrations
                     b.Property<int?>("UpdateById")
                         .HasColumnType("int");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("ClosetId");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("UpdateById");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Closet");
                 });
@@ -142,6 +156,9 @@ namespace TileMeUpWebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("CreatedById")
                         .HasColumnType("int");
 
@@ -179,16 +196,20 @@ namespace TileMeUpWebApi.Migrations
                     b.Property<int?>("UpdateById")
                         .HasColumnType("int");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("ClothingId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("CreatedById");
+                    b.HasKey("ClothingId");
 
                     b.HasIndex("ItemId");
 
-                    b.HasIndex("UpdateById");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Clothings");
                 });
@@ -205,6 +226,9 @@ namespace TileMeUpWebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("CreatedById")
                         .HasColumnType("int");
 
@@ -242,16 +266,20 @@ namespace TileMeUpWebApi.Migrations
                     b.Property<int?>("UpdateById")
                         .HasColumnType("int");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("FootwearId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("CreatedById");
+                    b.HasKey("FootwearId");
 
                     b.HasIndex("ItemId");
 
-                    b.HasIndex("UpdateById");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Footwears");
                 });
@@ -272,6 +300,9 @@ namespace TileMeUpWebApi.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CreatedById")
@@ -299,16 +330,20 @@ namespace TileMeUpWebApi.Migrations
                     b.Property<int?>("UpdateById")
                         .HasColumnType("int");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("ItemId");
 
                     b.HasIndex("ClosetId");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("UpdateById");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Items");
                 });
@@ -323,6 +358,9 @@ namespace TileMeUpWebApi.Migrations
 
                     b.Property<string>("Access")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CreatedById")
@@ -362,16 +400,20 @@ namespace TileMeUpWebApi.Migrations
                     b.Property<int?>("UpdateById")
                         .HasColumnType("int");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("JewelryId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("CreatedById");
+                    b.HasKey("JewelryId");
 
                     b.HasIndex("ItemId");
 
-                    b.HasIndex("UpdateById");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Jewelries");
                 });
@@ -386,6 +428,9 @@ namespace TileMeUpWebApi.Migrations
 
                     b.Property<string>("Access")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CreatedById")
@@ -415,19 +460,23 @@ namespace TileMeUpWebApi.Migrations
                     b.Property<int?>("UpdateById")
                         .HasColumnType("int");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<int>("WallId")
                         .HasColumnType("int");
 
                     b.HasKey("TileId");
 
-                    b.HasIndex("CreatedById");
-
                     b.HasIndex("ItemId");
 
-                    b.HasIndex("UpdateById");
+                    b.HasIndex("UserId");
 
                     b.HasIndex("WallId");
 
@@ -444,6 +493,9 @@ namespace TileMeUpWebApi.Migrations
 
                     b.Property<string>("Access")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CreatedById")
@@ -474,14 +526,13 @@ namespace TileMeUpWebApi.Migrations
                     b.Property<int?>("UpdateById")
                         .HasColumnType("int");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
 
                     b.HasKey("UserId");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("UpdateById");
 
                     b.ToTable("Users");
                 });
@@ -498,6 +549,9 @@ namespace TileMeUpWebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("CreatedById")
                         .HasColumnType("int");
 
@@ -511,8 +565,14 @@ namespace TileMeUpWebApi.Migrations
                     b.Property<int?>("UpdateById")
                         .HasColumnType("int");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("WallDescription")
                         .IsRequired()
@@ -527,9 +587,7 @@ namespace TileMeUpWebApi.Migrations
 
                     b.HasKey("WallId");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("UpdateById");
+                    b.HasIndex("UserId");
 
                     b.HasIndex("WallLayoutId");
 
@@ -546,6 +604,9 @@ namespace TileMeUpWebApi.Migrations
 
                     b.Property<string>("Access")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CreatedById")
@@ -573,100 +634,83 @@ namespace TileMeUpWebApi.Migrations
                     b.Property<int?>("UpdateById")
                         .HasColumnType("int");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
 
                     b.HasKey("WallLayoutId");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("UpdateById");
 
                     b.ToTable("WallLayouts");
                 });
 
             modelBuilder.Entity("TileMeUpDomain.Models.Accessory", b =>
                 {
-                    b.HasOne("TileMeUpDomain.Models.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
                     b.HasOne("TileMeUpDomain.Models.Item", "Item")
                         .WithMany()
                         .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("TileMeUpDomain.Models.User", "UpdatedBy")
+                    b.HasOne("TileMeUpDomain.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UpdateById");
-
-                    b.Navigation("CreatedBy");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Item");
 
-                    b.Navigation("UpdatedBy");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TileMeUpDomain.Models.Closet", b =>
                 {
-                    b.HasOne("TileMeUpDomain.Models.User", "CreatedBy")
+                    b.HasOne("TileMeUpDomain.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("CreatedById");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.HasOne("TileMeUpDomain.Models.User", "UpdatedBy")
-                        .WithMany()
-                        .HasForeignKey("UpdateById");
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("UpdatedBy");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TileMeUpDomain.Models.Clothing", b =>
                 {
-                    b.HasOne("TileMeUpDomain.Models.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
                     b.HasOne("TileMeUpDomain.Models.Item", "Item")
                         .WithMany()
                         .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("TileMeUpDomain.Models.User", "UpdatedBy")
+                    b.HasOne("TileMeUpDomain.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UpdateById");
-
-                    b.Navigation("CreatedBy");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Item");
 
-                    b.Navigation("UpdatedBy");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TileMeUpDomain.Models.Footwear", b =>
                 {
-                    b.HasOne("TileMeUpDomain.Models.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
                     b.HasOne("TileMeUpDomain.Models.Item", "Item")
                         .WithMany()
                         .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("TileMeUpDomain.Models.User", "UpdatedBy")
+                    b.HasOne("TileMeUpDomain.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UpdateById");
-
-                    b.Navigation("CreatedBy");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Item");
 
-                    b.Navigation("UpdatedBy");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TileMeUpDomain.Models.Item", b =>
@@ -674,129 +718,83 @@ namespace TileMeUpWebApi.Migrations
                     b.HasOne("TileMeUpDomain.Models.Closet", "Closet")
                         .WithMany()
                         .HasForeignKey("ClosetId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("TileMeUpDomain.Models.User", "CreatedBy")
+                    b.HasOne("TileMeUpDomain.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("CreatedById");
-
-                    b.HasOne("TileMeUpDomain.Models.User", "UpdatedBy")
-                        .WithMany()
-                        .HasForeignKey("UpdateById");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Closet");
 
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("UpdatedBy");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TileMeUpDomain.Models.Jewelry", b =>
                 {
-                    b.HasOne("TileMeUpDomain.Models.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
                     b.HasOne("TileMeUpDomain.Models.Item", "Item")
                         .WithMany()
                         .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("TileMeUpDomain.Models.User", "UpdatedBy")
+                    b.HasOne("TileMeUpDomain.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UpdateById");
-
-                    b.Navigation("CreatedBy");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Item");
 
-                    b.Navigation("UpdatedBy");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TileMeUpDomain.Models.Tile", b =>
                 {
-                    b.HasOne("TileMeUpDomain.Models.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
                     b.HasOne("TileMeUpDomain.Models.Item", "Item")
                         .WithMany()
                         .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("TileMeUpDomain.Models.User", "UpdatedBy")
+                    b.HasOne("TileMeUpDomain.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UpdateById");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TileMeUpDomain.Models.Wall", "Wall")
                         .WithMany()
                         .HasForeignKey("WallId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.Navigation("CreatedBy");
 
                     b.Navigation("Item");
 
-                    b.Navigation("UpdatedBy");
+                    b.Navigation("User");
 
                     b.Navigation("Wall");
                 });
 
-            modelBuilder.Entity("TileMeUpDomain.Models.User", b =>
-                {
-                    b.HasOne("TileMeUpDomain.Models.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
-                    b.HasOne("TileMeUpDomain.Models.User", "UpdatedBy")
-                        .WithMany()
-                        .HasForeignKey("UpdateById");
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("UpdatedBy");
-                });
-
             modelBuilder.Entity("TileMeUpDomain.Models.Wall", b =>
                 {
-                    b.HasOne("TileMeUpDomain.Models.User", "CreatedBy")
+                    b.HasOne("TileMeUpDomain.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("CreatedById");
-
-                    b.HasOne("TileMeUpDomain.Models.User", "UpdatedBy")
-                        .WithMany()
-                        .HasForeignKey("UpdateById");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TileMeUpDomain.Models.WallLayout", "WallLayout")
                         .WithMany()
                         .HasForeignKey("WallLayoutId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("UpdatedBy");
+                    b.Navigation("User");
 
                     b.Navigation("WallLayout");
-                });
-
-            modelBuilder.Entity("TileMeUpDomain.Models.WallLayout", b =>
-                {
-                    b.HasOne("TileMeUpDomain.Models.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
-                    b.HasOne("TileMeUpDomain.Models.User", "UpdatedBy")
-                        .WithMany()
-                        .HasForeignKey("UpdateById");
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("UpdatedBy");
                 });
 #pragma warning restore 612, 618
         }
