@@ -21,13 +21,11 @@ namespace TileMeUpDomain.Models
 
         public int? CreatedById { get; set; }
 
-        [ForeignKey("CreatedById")]
-        public User? CreatedBy { get; set; }
+        public string? CreatedBy { get; set; }
 
         public int? UpdateById { get; set; }
-
-        [ForeignKey("UpdateById")]
-        public User? UpdatedBy { get; set; }
+        
+        public string? UpdatedBy { get; set; }
 
     }
 }

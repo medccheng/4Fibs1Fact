@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TileMeUpDomain.Models
 {    public class Item : BaseModel
@@ -19,6 +20,12 @@ namespace TileMeUpDomain.Models
 
         public int ClosetId { get; set; }
 
+        [ForeignKey("ClosetId")]
+
         public Closet? Closet { get; set; }
+        public int UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public User? User { get; set; }
     }
 }

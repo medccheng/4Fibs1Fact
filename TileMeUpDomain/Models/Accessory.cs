@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using TileMeUpDomain.Enums;
 
 namespace TileMeUpDomain.Models
@@ -22,7 +23,14 @@ namespace TileMeUpDomain.Models
 
 
         public int ItemId { get; set; }
+
+        [ForeignKey("ItemId")]
         public Item? Item { get; set; }
+
+        public int UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public User? User { get; set; }
 
     }
 }
