@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Blazored.Modal;
+using Microsoft.Extensions.Logging;
 using TileMeUpMobile.Data;
 
 namespace TileMeUpMobile
@@ -14,7 +15,7 @@ namespace TileMeUpMobile
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
-
+            
             builder.Services.AddMauiBlazorWebView();
 
 #if DEBUG
@@ -26,6 +27,7 @@ namespace TileMeUpMobile
             builder.Services.AddSingleton<UserService>();
             builder.Services.AddSingleton<ClosetService>();
             builder.Services.AddSingleton<WallService>();
+            builder.Services.AddBlazoredModal();
 
             return builder.Build();
         }

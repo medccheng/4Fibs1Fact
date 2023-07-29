@@ -1,0 +1,48 @@
+﻿@page "/wall/{wallId:int}"
+
+@using TileMeUpMobile.Data
+@using TileMeUpDomain.Models
+@using Blazored.Modal
+@using Blazored.Modal.Services
+@inject WallService wallService
+@inject NavigationManager NavigationManager
+
+<NavLink class="nav-link" href="createwall">
+    Build a new wall
+</NavLink>
+
+@if (wall != null)
+{
+    <p><em>Hello</em></p>
+    <button @onclick="ShowModal">Click me</button>
+
+}
+
+@code {
+    [CascadingParameter] Blazored.Modal.Services.IModalService Modal { get; set; } = default!;
+    [Parameter] public int wallId { get; set; }
+    private Wall wall;
+
+    protected override async Task OnInitializedAsync()
+    {
+        wall = await wallService.GetWall(wallId);
+    }
+      
+
+    private async Task ShowModal()
+    {
+        var moviesModal = Modal.Show<WallDetail>("My Wall");
+        var result = await moviesModal.Result;
+
+        if (result.Cancelled)
+        {
+            Console.WriteLine("Modal was cancelled");
+        }
+        else if (result.Confirmed)
+        {
+            Console.WriteLine("Modal was closed");
+        }
+    }
+
+}
+

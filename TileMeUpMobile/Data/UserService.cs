@@ -47,7 +47,7 @@ namespace TileMeUpMobile.Data
             return user;
         }
 
-        public async Task<List<User>> GetUsersAsync()
+        public async Task<List<User>> GetAll()
         {
             var users = new List<User>();
 

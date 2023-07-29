@@ -23,6 +23,28 @@ namespace TileMeUpMobile.Data
             };
         }
 
+        public async Task<List<Wall>> GetAll()
+        {
+            var walls = new List<Wall>();
+
+            Uri uri = new Uri(string.Format(api_url, "GetAll", null));
+            try
+            {
+                HttpResponseMessage response = await _client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    walls = JsonSerializer.Deserialize<List<Wall>>(content, _serializerOptions);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"\tERROR {0}", ex.Message);
+            }
+
+            return walls;
+        }
+
         public async Task<List<Wall>> GetWallsAsync(int userId)
         {
             var walls = new List<Wall>();
@@ -43,6 +65,28 @@ namespace TileMeUpMobile.Data
             }
 
             return walls;
+        }
+
+        public async Task<Wall> GetWall(int wallId)
+        {
+            var wall = new Wall();
+
+            Uri uri = new Uri(string.Format(api_url, "Get/", wallId));
+            try
+            {
+                HttpResponseMessage response = await _client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    wall = JsonSerializer.Deserialize<Wall>(content, _serializerOptions);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"\tERROR {0}", ex.Message);
+            }
+
+            return wall;
         }
 
         public async Task<Wall> CreateWallAsync(Wall wall)

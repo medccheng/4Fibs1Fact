@@ -1,0 +1,34 @@
+﻿@page "/users"
+
+@using TileMeUpMobile.Data
+@using TileMeUpDomain.Models
+@inject UserService userService
+
+
+<NavLink class="nav-link" href="createuser">
+    Create a new user
+</NavLink>
+@if (users == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    foreach (var user in users)
+    {
+        <h2>@user.Firstname</h2>
+        <h5>@user.Lastname</h5>
+    }
+}
+
+
+
+@code {
+    private List<User> users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = await userService.GetAll();
+    }
+}
+

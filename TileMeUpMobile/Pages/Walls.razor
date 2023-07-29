@@ -1,0 +1,76 @@
+﻿@page "/walls"
+
+@using TileMeUpMobile.Data
+@using TileMeUpDomain.Models
+@inject WallService wallService
+@inject NavigationManager NavigationManager
+
+
+
+<style>
+    .wall-container {
+        display: grid;
+        grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
+        grid-gap: 20px;
+        /* Add any additional styling as needed */
+    }
+
+    .wall-item {
+        /* Add individual item styling here */
+        display: flex;
+        flex-direction: column; /* Display items vertically */
+        align-items: flex-start; /* Align items to the start (left) */
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+
+        .wall-item div {
+            /* Add styles for the div container */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .wall-item button {
+            margin-left: auto; /* Move the button to the right */
+        }
+</style>
+
+<NavLink class="nav-link btn-sm float-end" href="createwall">
+    Build a new wall
+</NavLink>
+<br />
+@if (walls != null)
+{
+    <div class="wall-container">
+        @foreach (var wall in walls)
+        {
+            <div class="wall-item">
+                <input type="hidden" name="wallId" value="@wall.WallId" />
+                <div>
+                    <h2>@wall.WallName</h2>
+                    <h5>@wall.WallDescription</h5>
+                </div>
+                <button @onclick="(() => ViewWall(wall.WallId))">View</button>
+            </div>
+        }
+    </div>
+}
+
+
+
+
+@code {
+    private List<Wall> walls;
+
+    protected override async Task OnInitializedAsync()
+    {
+        walls = await wallService.GetAll();
+    }
+
+    private void ViewWall(int wallId)
+    {
+        // Navigate to the detailed view page using the wallId
+        NavigationManager.NavigateTo($"wall/{wallId}");
+    }
+}
+
