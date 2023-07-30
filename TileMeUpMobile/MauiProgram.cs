@@ -1,6 +1,8 @@
-﻿using Blazored.Modal;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using TileMeUpMobile.Data;
+using Blazorise;
+using Blazorise.Bootstrap;
+using Blazorise.Icons.FontAwesome;
 
 namespace TileMeUpMobile
 {
@@ -15,19 +17,25 @@ namespace TileMeUpMobile
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
-            
+
             builder.Services.AddMauiBlazorWebView();
 
 #if DEBUG
-		builder.Services.AddBlazorWebViewDeveloperTools();
-		builder.Logging.AddDebug();
+            builder.Services.AddBlazorWebViewDeveloperTools();
+            builder.Logging.AddDebug();
 #endif
 
-            builder.Services.AddSingleton<WeatherForecastService>();
             builder.Services.AddSingleton<UserService>();
             builder.Services.AddSingleton<ClosetService>();
             builder.Services.AddSingleton<WallService>();
-            builder.Services.AddBlazoredModal();
+
+            builder.Services
+    .AddBlazorise(options =>
+    {
+        options.Immediate = true;
+    })
+    .AddBootstrapProviders()
+    .AddFontAwesomeIcons();
 
             return builder.Build();
         }

@@ -50,8 +50,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Blazored.Menu" Version="2.2.0" />
-        <PackageReference Include="Blazored.Modal" Version="7.1.0" />
+        <PackageReference Include="Blazorise" Version="1.2.3" />
+        <PackageReference Include="Blazorise.Bootstrap" Version="1.2.3" />
+        <PackageReference Include="Blazorise.Components" Version="1.2.3" />
+        <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.2.3" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
     </ItemGroup>
 

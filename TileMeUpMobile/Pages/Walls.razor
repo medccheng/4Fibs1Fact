@@ -6,52 +6,27 @@
 @inject NavigationManager NavigationManager
 
 
-
-<style>
-    .wall-container {
-        display: grid;
-        grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
-        grid-gap: 20px;
-        /* Add any additional styling as needed */
-    }
-
-    .wall-item {
-        /* Add individual item styling here */
-        display: flex;
-        flex-direction: column; /* Display items vertically */
-        align-items: flex-start; /* Align items to the start (left) */
-        border: 1px solid #ccc;
-        padding: 10px;
-    }
-
-        .wall-item div {
-            /* Add styles for the div container */
-            display: flex;
-            flex-direction: column;
-        }
-
-        .wall-item button {
-            margin-left: auto; /* Move the button to the right */
-        }
-</style>
-
-<NavLink class="nav-link btn-sm float-end" href="createwall">
-    Build a new wall
-</NavLink>
+<Button Class="btn-primary btn-lg" @onclick="() => CreateWall()">New Wall</Button>
+<br />
 <br />
 @if (walls != null)
 {
     <div class="wall-container">
         @foreach (var wall in walls)
         {
-            <div class="wall-item">
-                <input type="hidden" name="wallId" value="@wall.WallId" />
-                <div>
-                    <h2>@wall.WallName</h2>
-                    <h5>@wall.WallDescription</h5>
-                </div>
-                <button @onclick="(() => ViewWall(wall.WallId))">View</button>
-            </div>
+            <Card>
+                <CardBody>
+                    <input type="hidden" value="@wall.WallId" name="wallId"/>                    
+                    <CardTitle Size="3">
+                        @wall.WallName
+                    </CardTitle>
+                    <CardText>
+                        @wall.WallDescription
+                    </CardText>
+                    <Button Class="btn-light btn-sm" @onclick="(() => ViewWall(wall.WallId))">View</Button>
+                </CardBody>
+            </Card>
+            <br />
         }
     </div>
 }
@@ -71,6 +46,11 @@
     {
         // Navigate to the detailed view page using the wallId
         NavigationManager.NavigateTo($"wall/{wallId}");
+    }
+
+    private void CreateWall()
+    {
+        NavigationManager.NavigateTo($"createwall");
     }
 }
 
