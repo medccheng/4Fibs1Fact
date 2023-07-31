@@ -2,33 +2,49 @@
 
 @using TileMeUpMobile.Data
 @using TileMeUpDomain.Models
+@using Blazorise
 @inject WallService wallService
 @inject NavigationManager NavigationManager
 
 
-<Button Class="btn-primary btn-lg" @onclick="() => CreateWall()">New Wall</Button>
+<Button Color="Color.Primary" @onclick="() => CreateWall()">New Wall</Button>
 <br />
-<br />
-@if (walls != null)
+@if (walls == null)
 {
-    <div class="wall-container">
-        @foreach (var wall in walls)
-        {
-            <Card>
-                <CardBody>
-                    <input type="hidden" value="@wall.WallId" name="wallId"/>                    
-                    <CardTitle Size="3">
-                        @wall.WallName
-                    </CardTitle>
-                    <CardText>
-                        @wall.WallDescription
-                    </CardText>
-                    <Button Class="btn-light btn-sm" @onclick="(() => ViewWall(wall.WallId))">View</Button>
-                </CardBody>
-            </Card>
-            <br />
-        }
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <Table>
+        <TableHeader>
+            <TableRow>
+                <TableHeaderCell>#</TableHeaderCell>
+                <TableHeaderCell>Name</TableHeaderCell>
+                <TableHeaderCell>Description</TableHeaderCell>
+                <TableHeaderCell>Created On</TableHeaderCell>
+                <TableHeaderCell></TableHeaderCell>
+
+            </TableRow>
+        </TableHeader>
+        <TableBody>
+            @foreach (var wall in walls)
+            {
+                <TableRow>
+                    <TableRowHeader>@wall.WallId</TableRowHeader>
+                    <TableRowCell>@wall.WallName</TableRowCell>
+                    <TableRowCell>@wall.WallDescription</TableRowCell>
+                    <TableRowCell>@wall.CreatedOn</TableRowCell>
+                    <TableRowCell><Button Class="btn-light btn-sm" Clicked="(() => ViewWall(wall.UserId))">View</Button></TableRowCell>
+                </TableRow>
+            }
+        </TableBody>
+    </Table>
+
+    <div class="text-center">
+        <Button Class="btn-light btn-sm align-content-center" Clicked="(() => LoadMore())" @ref="btnMoreWalls">Load More</Button>
     </div>
+    <br />
+    <br />
 }
 
 
@@ -36,10 +52,13 @@
 
 @code {
     private List<Wall> walls;
+    private Button btnMoreWalls;
+    private int page;
 
     protected override async Task OnInitializedAsync()
     {
-        walls = await wallService.GetAll();
+        page = 1;
+        walls = await wallService.GetAll(page);
     }
 
     private void ViewWall(int wallId)
@@ -51,6 +70,21 @@
     private void CreateWall()
     {
         NavigationManager.NavigateTo($"createwall");
+    }
+
+    public async Task LoadMore()
+    {
+        page++;
+        var moreWalls = await wallService.GetAll(page);
+
+        if (moreWalls != null && moreWalls.Count > 0)
+            walls.AddRange(moreWalls);
+        else
+        {
+            // Access the button element using its id
+            var buttonElement = btnMoreWalls;
+            buttonElement.Style = "display:none;";
+        }
     }
 }
 

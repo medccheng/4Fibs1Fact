@@ -18,6 +18,8 @@ namespace TileMeUpWebApi.DAL.Repositories
         public async virtual Task<IEnumerable<TEntity>> GetAsync(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            int? page = null,
+            int? pageSize = null,
             string includeProperties = "")
         {
             IQueryable<TEntity> query = dbSet;
@@ -35,12 +37,16 @@ namespace TileMeUpWebApi.DAL.Repositories
 
             if (orderBy != null)
             {
-                return await orderBy(query).ToListAsync();
+                query = orderBy(query);
             }
-            else
+
+            if (page != null && pageSize != null)
             {
-                return await query.ToListAsync();
+                query = query.Skip((page.Value - 1) * pageSize.Value).Take(pageSize.Value);
             }
+
+            return await query.ToListAsync();
+
         }
 
         public virtual async Task<TEntity> GetByIDAsync(object id)

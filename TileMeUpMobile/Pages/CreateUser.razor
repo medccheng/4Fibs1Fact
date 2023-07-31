@@ -1,0 +1,98 @@
+﻿@page "/createuser"
+
+@using TileMeUpMobile.Data
+@using TileMeUpDomain.Models
+@inject UserService userService
+@inject NavigationManager navigationManager
+
+
+<h3>User Info</h3>
+@if (status != "")
+{
+    <Label Class="alert-primary">@status</Label>
+}
+<div class="form-group">
+    <label for="firstname">First Name:</label>
+    <input type="text" id="firstname" class="form-control" @bind="firstname" />
+</div>
+<div class="form-group">
+    <label for="lastname">Last Name:</label>
+    <input type="text" id="lastname" class="form-control" @bind="lastname" />
+</div>
+<div class="form-group">
+    <label for="email">Email:</label>
+    <input type="text" id="email" class="form-control" @bind="email" />
+</div>
+<div class="form-group">
+    <label for="nickname">Nickname:</label>
+    <input type="text" id="nickname" class="form-control" @bind="nickname" />
+</div>
+
+<Button Clicked="SubmitForm" Class="btn btn-primary">Submit</Button>
+<br />
+
+
+
+<style>
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+
+@code {
+    private User user;
+
+    private string firstname;
+    private string lastname;
+    private string email;
+    private string nickname;
+    private string status = "";
+
+    private async Task SubmitForm()
+    {
+        user = new User();
+        user.Firstname = firstname;
+        user.Lastname = lastname;
+        user.Email = email;
+        user.Nickname = nickname;
+        user.Status = "active";
+        user.Access = "public";
+        user.CreatedOn = DateTime.Now;
+        user.UpdatedOn = DateTime.Now;
+        user.CreatedById = 0;
+        user.UpdateById = 0;
+        user.CreatedBy = null;
+        user.UpdatedBy = null;
+        user.ErrorMessage = null;
+
+        user = await userService.CreateUserAsync(user);
+
+        if (user != null && user.ErrorMessage == null)
+            navigationManager.NavigateTo("users");
+        else
+            status = "Please try again. " + user.ErrorMessage;
+    }
+
+}

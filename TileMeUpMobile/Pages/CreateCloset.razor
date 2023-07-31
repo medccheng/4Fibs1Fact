@@ -1,30 +1,39 @@
 ﻿@page "/createcloset"
 @using TileMeUpMobile.Data
 @using TileMeUpDomain.Models
-@using Microsoft.Maui.Controls;
+@using System.IO
+@using Blazorise
 @inject ClosetService closetService
-@inject NavigationManager NavigationManager
+@inject NavigationManager navigationManager
 
 
-<h3>Create Closet</h3>
-
-<div>
-    <label for="name">Name:</label>
-    <input type="text" id="name" @bind="name" />
-    <br />
-    <label for="description">Description:</label>
-    <input type="text" id="description" @bind="description" />
-
+<h3>Closet Info</h3>
+@if (status != "")
+{
+    <Label Class="alert-primary">@status</Label>
+}
+<div class="form-group">
+    <label for="firstname">Name:</label>
+    <input type="text" id="firstname" class="form-control" @bind="name" />
 </div>
-<button type="submit" @onclick="SubmitForm">Submit</button>
+<div class="form-group">
+    <label for="lastname">Description:</label>
+    <input type="text" id="lastname" class="form-control" @bind="description" />
+</div>
+<br />
 
+<Button Clicked="SubmitForm" Class="btn btn-primary">Submit</Button>
+<br />
 
 
 
 @code {
+    private Closet closet;
     private string name;
     private string description;
-    private Closet closet;
+    private DateTime? createdOn;
+    private string status = "";
+    private string fileContent;
 
     private async Task SubmitForm()
     {
@@ -32,7 +41,7 @@
         closet = new Closet();
         closet.ClosetName = name;
         closet.ClosetDescription = description;
-        closet.UserId = 1;
+        closet.UserId = 43;
         closet.User = null;
         closet.Status = "active";
         closet.Access = "public";
@@ -45,8 +54,12 @@
 
         closet = await closetService.CreateClosetAsync(closet);
 
-        if (closet != null)
-            NavigationManager.NavigateTo("/closets", true);
-
+        if (closet != null && closet.ErrorMessage == null)
+            navigationManager.NavigateTo("closets");
+        else if (closet != null && closet.ErrorMessage != null)
+            status = "Please try again. " + closet.ErrorMessage;
+        else
+            status = "Please try again.";
     }
+
 }

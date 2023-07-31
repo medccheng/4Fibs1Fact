@@ -2,33 +2,94 @@
 
 @using TileMeUpMobile.Data
 @using TileMeUpDomain.Models
+@using Blazorise
 @inject UserService userService
+@inject NavigationManager navigationManager
 
 
-<NavLink class="nav-link" href="createuser">
-    Create a new user
-</NavLink>
+<Button Color="Color.Primary" Clicked="() => CreateUser()">Create User</Button>
+<br />
 @if (users == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    foreach (var user in users)
-    {
-        <h2>@user.Firstname</h2>
-        <h5>@user.Lastname</h5>
-    }
+    <Table>
+        <TableHeader>
+            <TableRow>
+                <TableHeaderCell>#</TableHeaderCell>
+                <TableHeaderCell>First Name</TableHeaderCell>
+                <TableHeaderCell>Last Name</TableHeaderCell>
+                <TableHeaderCell>Email</TableHeaderCell>
+                <TableHeaderCell></TableHeaderCell>
+
+            </TableRow>
+        </TableHeader>
+        <TableBody>
+            @foreach (var user in users)
+            {
+                <TableRow>
+                    <TableRowHeader>@user.UserId</TableRowHeader>
+                    <TableRowCell>@user.Firstname</TableRowCell>
+                    <TableRowCell>@user.Lastname</TableRowCell>
+                    <TableRowCell>@user.Email</TableRowCell>
+                    <TableRowCell><Button Class="btn-light btn-sm" Clicked="(() => ViewUser(user.UserId))">View</Button></TableRowCell>
+                </TableRow>
+            }
+        </TableBody>
+    </Table>
+
+    <div class="text-center">
+        <Button Class="btn-light btn-sm align-content-center" Clicked="(() => LoadMore())" @ref="btnMoreUsers">Load More</Button>
+    </div>
+    <br />
+    <br />
 }
 
 
-
 @code {
-    private List<User> users;
 
+
+    private List<User> users;
+    private int page;
+    private Button btnMoreUsers;
+
+    //On Initial Load
     protected override async Task OnInitializedAsync()
     {
-        users = await userService.GetAll();
+        page = 1;
+        users = await userService.GetAll(page);
     }
+
+    private void ViewUser(int userId)
+    {
+        // Navigate to the detailed view page using the wallId
+        navigationManager.NavigateTo($"user/{userId}");
+    }
+
+    private void CreateUser()
+    {
+        navigationManager.NavigateTo($"createuser");
+    }
+
+
+    public async Task LoadMore()
+    {
+        page++;
+        var moreUsers = await userService.GetAll(page);
+
+        if (moreUsers != null && moreUsers.Count > 0)
+            users.AddRange(moreUsers);
+        else
+        {
+            // Access the button element using its id
+            var buttonElement = btnMoreUsers;
+            buttonElement.Style = "display:none;";
+        }
+    }
+
+
+
 }
 

@@ -28,5 +28,8 @@ namespace TileMeUpDomain.Models
         
         public string? UpdatedBy { get; set; }
 
+        [NotMapped]
+        public string? ErrorMessage { get; set; }
+
     }
 }

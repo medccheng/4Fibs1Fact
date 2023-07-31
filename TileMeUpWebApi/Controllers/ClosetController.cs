@@ -46,12 +46,12 @@ namespace TileMeUpWebApi.Controllers
             return Closets.ToList();
         }
 
-        [HttpGet("GetAll")]
-        public async Task<ActionResult<IEnumerable<Closet>>> GetAll()
+        [HttpGet("{page}")]
+        public async Task<ActionResult<IEnumerable<Closet>>> GetAll(int? page = null)
         {
 
-            var Closets = await _unitOfWork.ClosetRepository.GetAsync();
-            if (Closets == null )
+            var Closets = await _unitOfWork.ClosetRepository.GetAsync(null, null, page, 5, "");
+            if (Closets == null)
             {
                 return NotFound();
             }
@@ -98,16 +98,27 @@ namespace TileMeUpWebApi.Controllers
         [HttpPost("Create")]
         public async Task<ActionResult<Closet>> Create(Closet closet)
         {
-            await _unitOfWork.ClosetRepository.Insert(closet);
-            _unitOfWork.Save();
+            try
+            {
+                await _unitOfWork.ClosetRepository.Insert(closet);
+                _unitOfWork.Save();
 
-            return closet;
+                return closet;
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null)
+                    closet.ErrorMessage = ex.InnerException.Message;
+                else
+                    closet.ErrorMessage = ex.Message;
+                return closet;
+            }
         }
 
         [HttpDelete("Delete/{closetId}")]
         public async Task<IActionResult> Delete(int closetId)
         {
-           
+
             var closet = await _unitOfWork.ClosetRepository.GetByIDAsync(closetId);
             if (closet == null)
             {

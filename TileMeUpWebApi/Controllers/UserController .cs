@@ -25,12 +25,12 @@ namespace TileMeUpWebApi.Controllers
         }
 
 
-        [HttpGet("GetAll")]
-        public async Task<ActionResult<IEnumerable<User>>> GetAll()
+        [HttpGet("{page}")]
+        public async Task<ActionResult<IEnumerable<User>>> GetAll(int? page = null)
         {
 
-            var Users = await _unitOfWork.UserRepository.GetAsync();
-            if (Users == null )
+            var Users = await _unitOfWork.UserRepository.GetAsync(null, null, page, 5, "");
+            if (Users == null)
             {
                 return NotFound();
             }
@@ -77,16 +77,26 @@ namespace TileMeUpWebApi.Controllers
         [HttpPost("Create")]
         public async Task<ActionResult<User>> Create(User user)
         {
-            await _unitOfWork.UserRepository.Insert(user);
-            _unitOfWork.Save();
-
-            return user;
+            try
+            {
+                await _unitOfWork.UserRepository.Insert(user);
+                _unitOfWork.Save();
+                return user;
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null)
+                    user.ErrorMessage = ex.InnerException.Message;
+                else
+                    user.ErrorMessage = ex.Message;
+                return user;
+            }            
         }
 
         [HttpDelete("Delete/{userId}")]
         public async Task<IActionResult> Delete(int userId)
         {
-           
+
             var user = await _unitOfWork.UserRepository.GetByIDAsync(userId);
             if (user == null)
             {

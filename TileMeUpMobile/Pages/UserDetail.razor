@@ -1,4 +1,4 @@
-﻿@page "/profile"
+﻿@page "/user/{userId:int}"
 
 @using TileMeUpMobile.Data
 @using TileMeUpDomain.Models
@@ -18,11 +18,12 @@ else
 
 
 @code {
+    [Parameter] public int userId { get; set; }
     private User user;
 
     protected override async Task OnInitializedAsync()
     {
-        user = await userService.GetUserAsync(2);
+        user = await userService.GetUserAsync(userId);
     }
 }
 

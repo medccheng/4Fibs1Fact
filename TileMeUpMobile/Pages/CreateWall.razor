@@ -2,32 +2,30 @@
 @using TileMeUpMobile.Data
 @using TileMeUpDomain.Models
 @inject WallService wallService
+@inject NavigationManager navigationManager
 
-@if (wall == null)
+<h3>Wall Info</h3>
+@if (status != "")
 {
-    <h3>Create Wall</h3>
-
-
-    <div>
-        <label for="wallName">Name:</label>
-        <input type="text" id="wallName" @bind="wallName" />
-        <br/>
-        <label for="wallDescription">Description:</label>
-        <input type="text" id="wallDescription" @bind="wallDescription" />        
-    </div>
-    <button type="submit" @onclick="SubmitForm">Submit</button>
-
+    <Label Class="alert-primary">@status</Label>
 }
-else
-{
-    <h2>Welcome to @wall.WallName!</h2>
-}
+<div class="form-group">
+    <label for="firstname">Name:</label>
+    <input type="text" id="firstname" class="form-control" @bind="wallName" />
+</div>
+<div class="form-group">
+    <label for="lastname">Description:</label>
+    <input type="text" id="lastname" class="form-control" @bind="wallDescription" />
+</div>
+<br />
+<Button Clicked="SubmitForm" Class="btn btn-primary">Submit</Button>
+<br />
 
 
 @code {
     private string wallName;
     private string wallDescription;
-
+    private string status = "";
     private Wall wall;
 
     private async Task SubmitForm()
@@ -36,7 +34,7 @@ else
         wall.WallName = wallName;
         wall.WallDescription = wallDescription;
         wall.WallLayoutId = 1;
-        wall.UserId = 1;
+        wall.UserId = 43;
         wall.Status = "active";
         wall.Access = "public";
         wall.CreatedOn = DateTime.Now;
@@ -45,8 +43,15 @@ else
         wall.UpdateById = 0;
         wall.User = null;
         wall.CreatedBy = null;
-        wall.UpdatedBy = null;        
-        
+        wall.UpdatedBy = null;
+
         wall = await wallService.CreateWallAsync(wall);
+
+        if (wall != null && wall.ErrorMessage == null)
+            navigationManager.NavigateTo("walls");
+        else if (wall != null && wall.ErrorMessage != null)
+            status = "Please try again. " + wall.ErrorMessage;
+        else
+            status = "Please try again.";
     }
 }

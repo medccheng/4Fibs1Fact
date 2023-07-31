@@ -47,11 +47,11 @@ namespace TileMeUpWebApi.Controllers
         }
 
 
-        [HttpGet("GetAll")]
-        public async Task<ActionResult<IEnumerable<Wall>>> GetAll()
+        [HttpGet("{page}")]
+        public async Task<ActionResult<IEnumerable<Wall>>> GetAll(int? page = null)
         {
 
-            var Walls = await _unitOfWork.WallRepository.GetAsync();
+            var Walls = await _unitOfWork.WallRepository.GetAsync(null, null, page, 5, "");
             if (Walls == null )
             {
                 return NotFound();
@@ -99,10 +99,20 @@ namespace TileMeUpWebApi.Controllers
         [HttpPost("Create")]
         public async Task<ActionResult<Wall>> Create(Wall wall)
         {
-            await _unitOfWork.WallRepository.Insert(wall);
-            _unitOfWork.Save();
-
-            return wall;
+            try
+            {
+                await _unitOfWork.WallRepository.Insert(wall);
+                _unitOfWork.Save();
+                return wall;
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null)
+                    wall.ErrorMessage = ex.InnerException.Message;
+                else
+                    wall.ErrorMessage = ex.Message;
+                return wall;
+            }
         }
 
         [HttpDelete("Delete/{wallId}")]

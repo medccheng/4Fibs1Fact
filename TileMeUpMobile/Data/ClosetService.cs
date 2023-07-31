@@ -45,11 +45,11 @@ namespace TileMeUpMobile.Data
             return closets;
         }
 
-        public async Task<List<Closet>> GetAll()
+        public async Task<List<Closet>> GetAll(int? _page = null)
         {
             var closets = new List<Closet>();
 
-            Uri uri = new Uri(string.Format(api_url, "GetAll", null));
+            Uri uri = new Uri(string.Format(api_url, _page, null));
             try
             {
                 HttpResponseMessage response = await _client.GetAsync(uri);
@@ -76,10 +76,12 @@ namespace TileMeUpMobile.Data
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-                    closet = JsonSerializer.Deserialize<Closet>(content, _serializerOptions);
-                    return closet;
+                    closet = JsonSerializer.Deserialize<Closet>(content, _serializerOptions);                    
                 }
-                else return null;
+                else
+                    closet.ErrorMessage = response.StatusCode.ToString();
+
+                return closet;
             }
             catch (Exception ex)
             {

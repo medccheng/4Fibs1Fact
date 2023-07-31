@@ -38,20 +38,21 @@ namespace TileMeUpMobile.Data
                     string content = await response.Content.ReadAsStringAsync();
                     user = JsonSerializer.Deserialize<User>(content, _serializerOptions);
                 }
+                
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(@"\tERROR {0}", ex.Message);
+                user.ErrorMessage = ex.Message;
             }
-
             return user;
         }
 
-        public async Task<List<User>> GetAll()
+        public async Task<List<User>> GetAll(int? _page=null)
         {
             var users = new List<User>();
 
-            Uri uri = new Uri(string.Format(api_url, "GetAll", null));
+            Uri uri = new Uri(string.Format(api_url, _page, null));
             try
             {
                 HttpResponseMessage response = await _client.GetAsync(uri);
@@ -80,9 +81,11 @@ namespace TileMeUpMobile.Data
                 {
                     string content = await response.Content.ReadAsStringAsync();
                     user = JsonSerializer.Deserialize<User>(content, _serializerOptions);
-                    return user;
                 }
-                else return null;
+                else
+                    user.ErrorMessage = response.StatusCode.ToString();
+
+                return user;
             }
             catch (Exception ex)
             {

@@ -23,11 +23,11 @@ namespace TileMeUpMobile.Data
             };
         }
 
-        public async Task<List<Wall>> GetAll()
+        public async Task<List<Wall>> GetAll(int? _page=null)
         {
             var walls = new List<Wall>();
 
-            Uri uri = new Uri(string.Format(api_url, "GetAll", null));
+            Uri uri = new Uri(string.Format(api_url, _page, null));
             try
             {
                 HttpResponseMessage response = await _client.GetAsync(uri);
@@ -98,11 +98,12 @@ namespace TileMeUpMobile.Data
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-                    wall = JsonSerializer.Deserialize<Wall>(content, _serializerOptions);
-                    return wall;
+                    wall = JsonSerializer.Deserialize<Wall>(content, _serializerOptions);                    
                 }
-                else 
-                    return null;
+                else
+                    wall.ErrorMessage = response.StatusCode.ToString();
+
+                return wall;
             }
             catch (Exception ex)
             {
