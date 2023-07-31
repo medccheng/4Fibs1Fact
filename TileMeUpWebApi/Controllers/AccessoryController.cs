@@ -19,10 +19,12 @@ namespace TileMeUpWebApi.Controllers
     public class AccessoryController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private IConfiguration _configuration;
 
-        public AccessoryController(IUnitOfWork unitOfWork)
+        public AccessoryController(IUnitOfWork unitOfWork, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
+            _configuration = configuration;
         }
 
         [HttpGet("GetByItem/{itemId}")]

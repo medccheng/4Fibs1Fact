@@ -18,10 +18,12 @@ namespace TileMeUpWebApi.Controllers
     public class FootwearController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private IConfiguration _configuration;
 
-        public FootwearController(IUnitOfWork unitOfWork)
+        public FootwearController(IUnitOfWork unitOfWork, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
+            _configuration = configuration;
         }
 
         [HttpGet("GetByItem/{itemId}")]

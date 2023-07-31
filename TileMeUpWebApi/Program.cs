@@ -11,6 +11,7 @@ IConfiguration configuration = new ConfigurationBuilder()
 
 string connectionString = configuration.GetConnectionString("TileMeUpDbConnection");
 
+builder.Configuration.AddConfiguration(configuration);
 builder.Services.AddDbContext<TileMeUpDbContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddControllers();

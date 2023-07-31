@@ -18,10 +18,12 @@ namespace TileMeUpWebApi.Controllers
     public class WallLayoutController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private IConfiguration _configuration;
 
-        public WallLayoutController(IUnitOfWork unitOfWork)
+        public WallLayoutController(IUnitOfWork unitOfWork, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
+            _configuration = configuration;
         }
 
 

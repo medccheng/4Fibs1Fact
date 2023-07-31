@@ -18,10 +18,12 @@ namespace TileMeUpWebApi.Controllers
     public class TileController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private IConfiguration _configuration;
 
-        public TileController(IUnitOfWork unitOfWork)
+        public TileController(IUnitOfWork unitOfWork, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
+            _configuration = configuration;
         }
 
         [HttpGet("GetByWall/{wallId}")]
