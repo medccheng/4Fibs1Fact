@@ -1,0 +1,88 @@
+﻿@page "/closets"
+
+@using TileMeUpMobile.Data
+@using TileMeUpDomain.Models
+@inject ClosetService closetService
+@inject NavigationManager navigationManager
+
+
+<Button Color="Color.Primary" @onclick="() => CreateCloset()">New Closet</Button>
+<br />
+@if (closets == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <Table>
+        <TableHeader>
+            <TableRow>
+                <TableHeaderCell>#</TableHeaderCell>
+                <TableHeaderCell>Name</TableHeaderCell>
+                <TableHeaderCell>Description</TableHeaderCell>
+                <TableHeaderCell>Created On</TableHeaderCell>
+                <TableHeaderCell></TableHeaderCell>
+
+            </TableRow>
+        </TableHeader>
+        <TableBody>
+            @foreach (var closet in closets)
+            {
+                <TableRow>
+                    <TableRowHeader>@closet.ClosetId</TableRowHeader>
+                    <TableRowCell>@closet.ClosetName</TableRowCell>
+                    <TableRowCell>@closet.ClosetDescription</TableRowCell>
+                    <TableRowCell>@closet.CreatedOn</TableRowCell>
+                    <TableRowCell><Button Class="btn-light btn-sm" Clicked="(() => ViewCloset(closet.ClosetId))">View</Button></TableRowCell>
+                </TableRow>
+            }
+        </TableBody>
+    </Table>
+
+    <div class="text-center">
+        <Button Class="btn-light btn-sm align-content-center" Clicked="(() => LoadMore())" @ref="btnMoreClosets">Load More</Button>
+    </div>
+    <br />
+    <br />
+}
+
+
+
+@code {
+    private List<Closet> closets;
+    private Button btnMoreClosets;
+    private int page;
+
+    protected override async Task OnInitializedAsync()
+    {
+        page = 1;
+        closets = await closetService.GetAll(page);
+    }
+
+    private void CreateCloset()
+    {
+        navigationManager.NavigateTo($"createcloset");
+    }
+
+    private void ViewCloset(int closetId)
+    {
+        // Navigate to the detailed view page using the wallId
+        navigationManager.NavigateTo($"closet/{closetId}");
+    }
+
+    public async Task LoadMore()
+    {
+        page++;
+        var moreClosets = await closetService.GetAll(page);
+
+        if (moreClosets != null && moreClosets.Count > 0)
+            closets.AddRange(moreClosets);
+        else
+        {
+            // Access the button element using its id
+            var buttonElement = btnMoreClosets;
+            buttonElement.Style = "display:none;";
+        }
+    }
+}
+

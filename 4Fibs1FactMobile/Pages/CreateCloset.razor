@@ -1,0 +1,65 @@
+﻿@page "/createcloset"
+@using TileMeUpMobile.Data
+@using TileMeUpDomain.Models
+@using System.IO
+@using Blazorise
+@inject ClosetService closetService
+@inject NavigationManager navigationManager
+
+
+<h3>Closet Info</h3>
+@if (status != "")
+{
+    <Label Class="alert-primary">@status</Label>
+}
+<div class="form-group">
+    <label for="firstname">Name:</label>
+    <input type="text" id="firstname" class="form-control" @bind="name" />
+</div>
+<div class="form-group">
+    <label for="lastname">Description:</label>
+    <input type="text" id="lastname" class="form-control" @bind="description" />
+</div>
+<br />
+
+<Button Clicked="SubmitForm" Class="btn btn-primary">Submit</Button>
+<br />
+
+
+
+@code {
+    private Closet closet;
+    private string name;
+    private string description;
+    private DateTime? createdOn;
+    private string status = "";
+    private string fileContent;
+
+    private async Task SubmitForm()
+    {
+
+        closet = new Closet();
+        closet.ClosetName = name;
+        closet.ClosetDescription = description;
+        closet.UserId = 43;
+        closet.User = null;
+        closet.Status = "active";
+        closet.Access = "public";
+        closet.CreatedOn = DateTime.Now;
+        closet.UpdatedOn = DateTime.Now;
+        closet.CreatedById = 0;
+        closet.UpdateById = 0;
+        closet.CreatedBy = null;
+        closet.UpdatedBy = null;
+
+        closet = await closetService.CreateClosetAsync(closet);
+
+        if (closet != null && closet.ErrorMessage == null)
+            navigationManager.NavigateTo("closets");
+        else if (closet != null && closet.ErrorMessage != null)
+            status = "Please try again. " + closet.ErrorMessage;
+        else
+            status = "Please try again.";
+    }
+
+}

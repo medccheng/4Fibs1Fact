@@ -1,0 +1,29 @@
+﻿@page "/user/{userId:int}"
+
+@using TileMeUpMobile.Data
+@using TileMeUpDomain.Models
+@inject UserService userService
+
+
+@if (user == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h2>Welcome @user.Firstname!</h2>
+    
+}
+
+
+
+@code {
+    [Parameter] public int userId { get; set; }
+    private User user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await userService.GetUserAsync(userId);
+    }
+}
+

@@ -1,0 +1,37 @@
+﻿@page "/wall/{wallId:int}"
+
+@using TileMeUpMobile.Data
+@using TileMeUpDomain.Models
+@inject WallService wallService
+@inject NavigationManager NavigationManager
+
+<Link Class="link-secondary" href="walls">
+    Go back
+</Link>
+<br /><br />
+@if (wall != null)
+{
+    <Card>
+        <CardBody>
+            <CardTitle Size="3">
+                @wall.WallName
+            </CardTitle>
+            <CardText>
+                @wall.WallDescription
+            </CardText>
+        </CardBody>
+    </Card>
+}
+
+@code {
+    [Parameter] public int wallId { get; set; }
+    private Wall wall;
+
+    protected override async Task OnInitializedAsync()
+    {
+        wall = await wallService.GetWall(wallId);
+    }     
+
+
+}
+
